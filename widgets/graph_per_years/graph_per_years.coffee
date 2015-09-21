@@ -16,7 +16,7 @@ class Dashing.GraphPerYears extends Dashing.Widget
       element: @node
       width: width
       height: height
-      renderer: @get("graphtype")
+      renderer: 'bar'
       series: [
         {
         color: "#fff",
