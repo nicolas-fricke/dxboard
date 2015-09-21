@@ -1,5 +1,6 @@
 require 'pg'
 require_relative '../secrets'
+require_relative '../database'
 
 signup_query = <<-sql
   SELECT
@@ -16,10 +17,7 @@ signup_query = <<-sql
     week;
 sql
 
-conn = PG.connect host: Secrets.get['database']['host'],
-                  dbname: Secrets.get['database']['db_name'],
-                  user: Secrets.get['database']['username'],
-                  password: Secrets.get['database']['password']
+conn = Database.connection
 
 SCHEDULER.every '60s' do
   points = []
