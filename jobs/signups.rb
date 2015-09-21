@@ -6,7 +6,7 @@ signup_query = <<-sql
     extract(WEEK FROM created_at) AS week,
     extract(YEAR FROM created_at) AS year
   FROM consultants
-  WHERE created_at > now() :: DATE - 200
+  WHERE created_at > now() :: DATE - 365
   GROUP BY
     year,
     week
@@ -17,9 +17,16 @@ sql
 
 conn = PG.connect( host: 'localhost', dbname: 'neo', user: 'neo'  )
 
-SCHEDULER.every '10m' do
-
-  values = conn.exec(signup_query).values
-  puts values
-  # send_event('signups', points: values)
+SCHEDULER.every '60s' do
+  points = []
+  values = conn.exec(signup_query)
+  values.each_with_index do |value, index|
+    point = {
+      x: index,
+      y: value['count'].to_i
+    }
+    points << point
+    puts point
+  end
+  send_event('signups', points: points)
 end
