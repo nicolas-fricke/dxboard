@@ -44,7 +44,6 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
         y: value['count'].to_i
     }
     points_current_year << point
-    puts point
   end
 
   points_past_year = []
@@ -55,7 +54,6 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
         y: value['count'].to_i
     }
     points_past_year << point
-    puts point
   end
 
   points_past_year << { x: 0, y: 0 }

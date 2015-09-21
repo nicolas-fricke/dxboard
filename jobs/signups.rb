@@ -19,16 +19,16 @@ sql
 
 conn = Database.connection
 
-SCHEDULER.every '60s' do
+SCHEDULER.every '1m', :first_in => 1 do
+
   points = []
   values = conn.exec(signup_query)
+
   values.each_with_index do |value, index|
-    point = {
+    points << {
       x: index,
       y: value['count'].to_i
     }
-    points << point
-    puts point
   end
   send_event('signups', points: points)
 end
