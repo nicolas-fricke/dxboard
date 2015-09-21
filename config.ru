@@ -4,6 +4,7 @@ require_relative 'secrets'
 configure do
 
   set :auth_token, Secrets.get['auth_token']
+  set :default_dashboard, 'devex'
 
   helpers do
     def protected!
