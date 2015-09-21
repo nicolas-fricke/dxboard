@@ -1,7 +1,9 @@
 require 'dashing'
+require_relative 'secrets'
 
 configure do
-  set :auth_token, 'YOUR_AUTH_TOKEN'
+
+  set :auth_token, Secrets.get['auth_token']
 
   helpers do
     def protected!
